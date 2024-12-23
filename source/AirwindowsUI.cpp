@@ -4,10 +4,10 @@
 
 void AirwindowsLookAndFeel::drawLinearSlider (juce::Graphics& g, int x, int y, int width, int height, float sliderPos, float minSliderPos, float maxSliderPos, const juce::Slider::SliderStyle style, juce::Slider& slider) {
     auto bounds = juce::Rectangle<int> (x, y, width, height).toFloat();
-    auto bevelW = sqrt((float)width);
+    float bevelW = sqrt((float)width);
     if (slider.isHorizontal()) bevelW = sqrt((float)height);
-    auto lineW = sqrt(bevelW)*0.618f;
-    auto trackWidth = bevelW;
+    float lineW = sqrt(bevelW)*0.618f;
+    float trackWidth = bevelW;
     //basic variables we'll be using for our controls
     
     juce::Path backgroundTrack;
@@ -41,8 +41,8 @@ void AirwindowsLookAndFeel::drawLinearSlider (juce::Graphics& g, int x, int y, i
     //but the horizontal ones can still have a lot of text. To control their bulk, narrow the slot they're in.
 
     juce::Point<float> maxPoint = {slider.isHorizontal()?(sliderPos*0.94f)+(width*0.025f):((float)x+(float)width*0.5f), slider.isHorizontal()?((float)y+(float)height*0.5f):(sliderPos*0.94f)+(height*0.025f)};
-    auto thumbWidth = bevelW*2.9f;
-    auto rectSlider = juce::Rectangle(thumbWidth*1.618f, thumbWidth).withCentre(maxPoint);
+    float thumbWidth = bevelW*2.9f;
+    auto rectSlider = juce::Rectangle<float>(thumbWidth*1.618f, thumbWidth).withCentre(maxPoint);
     if (slider.isHorizontal()) rectSlider = juce::Rectangle(thumbWidth, thumbWidth*1.618f).withCentre(maxPoint);
     g.setColour (findColour(juce::ResizableWindow::backgroundColourId)); g.setOpacity(1.0f); g.fillRoundedRectangle (rectSlider, bevelW);
     //solid background for knob so you can't see the track under it
@@ -61,7 +61,7 @@ void AirwindowsLookAndFeel::drawLinearSlider (juce::Graphics& g, int x, int y, i
     //This is the outside area of the slider knob, with the shading/highlighting that renders the 3D effect.
     
     float thumbScale = 0.85f; rectSlider = juce::Rectangle<float> (thumbWidth*thumbScale, thumbWidth*thumbScale).withCentre (maxPoint);
-    rectSlider = juce::Rectangle<float> (thumbWidth*thumbScale, thumbWidth*thumbScale).withCentre (maxPoint);
+    rectSlider = juce::Rectangle<float>(thumbWidth*thumbScale, thumbWidth*thumbScale).withCentre(maxPoint);
     g.setColour (slider.findColour (juce::Slider::thumbColourId)); g.fillEllipse (rectSlider);
     cg = juce::ColourGradient(juce::Colours::white, rectSlider.getBottomRight(), juce::Colours::black, rectSlider.getTopLeft(),false);
     cg.addColour(0.191f, juce::Colours::white); cg.addColour(0.382f, slider.findColour (juce::Slider::thumbColourId)); cg.addColour(0.618f, slider.findColour (juce::Slider::thumbColourId)); cg.isRadial = true;
@@ -78,17 +78,17 @@ void AirwindowsLookAndFeel::drawLinearSlider (juce::Graphics& g, int x, int y, i
 
 
 void AirwindowsLookAndFeel::drawRotarySlider (juce::Graphics& g, int x, int y, int width, int height, float sliderPos, const float rotaryStartAngle, const float rotaryEndAngle, juce::Slider& slider) {
-    auto tilt = (slider.findColour (juce::Slider::backgroundColourId).getFloatRed()-0.5f)*1.236f;
+    float tilt = (slider.findColour (juce::Slider::backgroundColourId).getFloatRed()-0.5f)*1.236f;
     auto textbounds = juce::Rectangle<int> (x, y, width, height).toFloat();
     auto bounds = textbounds; bounds.removeFromBottom(4.0f+(height*0.12f)+(height*tilt*tilt*0.12f)+(height*tilt*fabs(tilt)*0.12f)); bounds.reduce(1.0f, 1.0f);
     float scaleHeight = 1.0f-(fabs(tilt)); //proportion of vertical height relative to horizontal
     float trimscaleHeight = scaleHeight + (tilt*0.05f);
     float radius = bounds.getWidth()*0.5f; if (radius > (bounds.getHeight()/scaleHeight)*0.5f) radius = (bounds.getHeight()/scaleHeight)*0.5f;
-    auto gradientSquare = juce::Rectangle(bounds.getCentreX()-radius, bounds.getCentreY()-(radius*sqrt(scaleHeight)), radius*2.0f, radius*sqrt(trimscaleHeight)*2.0f).toFloat();
-    auto square = juce::Rectangle(bounds.getCentreX()-radius, bounds.getCentreY()-(radius*scaleHeight), radius*2.0f, radius*trimscaleHeight*2.0f).toFloat();
-    auto toAngle = rotaryStartAngle + sliderPos * (rotaryEndAngle - rotaryStartAngle);
-    auto bevelW = sqrt(radius*0.5f)*1.618f;
-    auto lineW = sqrt(bevelW)*0.55f;
+    auto gradientSquare = juce::Rectangle<float>((float)bounds.getCentreX()-radius, (float)bounds.getCentreY()-(radius*(float)sqrt(scaleHeight)), radius*2.0f, radius*(float)sqrt(trimscaleHeight)*2.0f).toFloat();
+    auto square = juce::Rectangle<float>((float)bounds.getCentreX()-radius, (float)bounds.getCentreY()-(radius*scaleHeight), radius*2.0f, radius*trimscaleHeight*2.0f).toFloat();
+    float toAngle = rotaryStartAngle + sliderPos * (rotaryEndAngle - rotaryStartAngle);
+    float bevelW = (float)sqrt(radius*0.5f)*1.618f;
+    float lineW = (float)sqrt(bevelW)*0.55f;
     //basic variables we'll be using for our controls
     
     juce::ColourGradient cg = juce::ColourGradient(juce::Colours::white, gradientSquare.getTopLeft(), juce::Colours::black, gradientSquare.getBottomRight(),false);

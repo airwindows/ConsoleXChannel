@@ -2,12 +2,16 @@
 # 3.24.1 is also bundled in CLion as of 2023
 cmake_minimum_required(VERSION 3.24.1)
 
+
 # This tells cmake we have goodies in the /cmake folder
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 include (PamplejuceVersion)
 
 # Configures universal binaries and decides which version of macOS to support
 include(PamplejuceMacOS)
+
+# Couple tweaks that IMO should be JUCE defaults
+include(JUCEDefaults)
 
 # Change me!
 # This is the internal name of the project and the name of JUCE's shared code target
@@ -35,9 +39,6 @@ set(FORMATS Standalone AU VST3 AUv3)
 
 # For simplicity, the name of the CMake project is also the name of the target
 project(${PROJECT_NAME} VERSION ${CURRENT_VERSION})
-
-# Couple tweaks that IMO should be JUCE defaults
-include(JUCEDefaults)
 
 # JUCE is setup as a submodule in the /JUCE folder
 # Locally, you must run `git submodule update --init --recursive` once

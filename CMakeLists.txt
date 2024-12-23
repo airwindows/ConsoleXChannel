@@ -45,7 +45,7 @@ project(${PROJECT_NAME} VERSION ${CURRENT_VERSION})
 # and later `git submodule update --remote --merge` to keep it up to date
 # On Github Actions, this is done as a part of actions/checkout
 add_subdirectory(JUCE)
-add_subdirectory(modules/clap-juce-extensions EXCLUDE_FROM_ALL)
+add_subdirectory(lib/clap-juce-extensions EXCLUDE_FROM_ALL)
 
 # Add any other modules you want modules here, before the juce_add_plugin call
 # juce_add_module(modules/my_module)

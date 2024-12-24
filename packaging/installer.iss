@@ -13,6 +13,7 @@ Name: "custom"; Description: "Custom installation"; Flags: iscustom
 [Components]
 Name: "standalone"; Description: "Standalone application"; Types: full custom
 Name: "vst3"; Description: "VST3 plugin"; Types: full custom
+Name: "clap"; Description: "CLAP plugin"; Types: full custom
 
 [Setup]
 ArchitecturesInstallIn64BitMode=x64compatible

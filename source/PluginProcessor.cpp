@@ -192,14 +192,40 @@ void PluginProcessor::getStateInformation (juce::MemoryBlock& destData)
     // You should use this method to store your parameters in the memory block.
     // You could do that either as raw data, or use the XML or ValueTree classes
     // as intermediaries to make it easy to save and load complex data.
-    juce::ignoreUnused (destData);
+    std::unique_ptr<juce::XmlElement> xml(new juce::XmlElement("consolexchannel"));
+    xml->setAttribute("streamingVersion", (int)8524);
+
+    for (int i = 0; i < n_params; ++i)
+    {
+        juce::String nm = juce::String("awcxc_") + std::to_string(i);
+        float val = 0.0f; if (i < n_params) val = *(params[i]);
+        xml->setAttribute(nm, val);
+    }
+    copyXmlToBinary(*xml, destData);
 }
 
 void PluginProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
-    juce::ignoreUnused (data, sizeInBytes);
+    std::unique_ptr<juce::XmlElement> xmlState(getXmlFromBinary(data, sizeInBytes));
+
+    if (xmlState.get() != nullptr)
+    {
+        if (xmlState->hasTagName("consolexchannel"))
+        {
+            for (int i = 0; i < n_params; ++i)
+            {
+                juce::String nm = juce::String("awcxc_") + std::to_string(i);
+                auto f = xmlState->getDoubleAttribute(nm);
+                params[i]->setValueNotifyingHost(f);
+            }
+        }
+        updateHostDisplay();
+    }
+    //These functions are adapted (simplified) from baconpaul's airwin2rack and all thanks to getting
+    //it working shall go there, though sudara or anyone could've spotted that I hadn't done these.
+    //baconpaul pointed me to the working versions in airwin2rack, that I needed to see.
 }
 
 void PluginProcessor::updateTrackProperties(const TrackProperties& properties)

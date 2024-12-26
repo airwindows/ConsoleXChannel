@@ -85,21 +85,29 @@ public:
         LEDColour = juce::Colours::findColourForName(newLEDColour, juce::Colours::red);
         applyTilt = fmax(fmin(newTilt.getFloatValue(),1.0f),0.0f) * 0.5f; //value is 0-1 but in use it's 0-0.5
 
-        knobMode = 0; //defaults to rotary because it allows for really fine adjustments
+        knobMode = 1; //defaults to rotary because it allows for really fine adjustments
         if (newKnobMode.equalsIgnoreCase("rotary")) knobMode = 0;
         if (newKnobMode.equalsIgnoreCase("airwindows")) knobMode = 0;
         if (newKnobMode.equalsIgnoreCase("realistic")) knobMode = 0;
         if (newKnobMode.equalsIgnoreCase("vertical")) knobMode = 1;
         if (newKnobMode.equalsIgnoreCase("up and down")) knobMode = 1;
+        if (newKnobMode.equalsIgnoreCase("up-and-down")) knobMode = 1;
         if (newKnobMode.equalsIgnoreCase("normal")) knobMode = 1; //I'm told vertical is customary ;)
         if (newKnobMode.equalsIgnoreCase("default")) knobMode = 1; // so here ya go ;)
         if (newKnobMode.equalsIgnoreCase("horizontal")) knobMode = 2;
         if (newKnobMode.equalsIgnoreCase("sideways")) knobMode = 2;
+        if (newKnobMode.equalsIgnoreCase("horizontalvertical")) knobMode = 3;
+        if (newKnobMode.equalsIgnoreCase("verticalhorizontal")) knobMode = 3;
+        if (newKnobMode.equalsIgnoreCase("horizontal-vertical")) knobMode = 3;
+        if (newKnobMode.equalsIgnoreCase("vertical-horizontal")) knobMode = 3;
+        if (newKnobMode.equalsIgnoreCase("diagonal")) knobMode = 3;
+        if (newKnobMode.equalsIgnoreCase("both")) knobMode = 3;
         
         alfInterpolation = 2; //defaults to bicubic 'cloud' interpolation
         if (newInterpolation.equalsIgnoreCase("none")) alfInterpolation = 0;
         if (newInterpolation.equalsIgnoreCase("off")) alfInterpolation = 0;
         if (newInterpolation.equalsIgnoreCase("nearestneighbor")) alfInterpolation = 0;
+        if (newInterpolation.equalsIgnoreCase("nearest-neighbor")) alfInterpolation = 0;
         if (newInterpolation.equalsIgnoreCase("nearest neighbor")) alfInterpolation = 0; //variations on mondrian-meter
         if (newInterpolation.equalsIgnoreCase("bilinear")) alfInterpolation = 1; //option for softer definition
      }

@@ -129,6 +129,41 @@ PluginEditor::PluginEditor (PluginProcessor& p)
         FADKnob.setSliderStyle(juce::Slider::RotaryHorizontalDrag);
     }
 
+    if (airwindowsLookAndFeel.knobMode == 3) {
+        HIPKnob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+        LOPKnob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+        AIRKnob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+        FIRKnob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+        STOKnob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+        RNGKnob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+        FCRKnob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+        SCRKnob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+        FCAKnob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+        SCAKnob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+        FCLKnob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+        SCLKnob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+        FGRKnob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+        SGRKnob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+        FGSKnob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+        SGSKnob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+        FGLKnob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+        SGLKnob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+        TRFKnob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+        TRRKnob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+        HMFKnob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+        HMGKnob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+        HMRKnob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+        LMFKnob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+        LMGKnob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+        LMRKnob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+        BSFKnob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+        BSGKnob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+        BSRKnob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+        DSCKnob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+        PANKnob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+        FADKnob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+    }
+
     HIPKnob.setTextBoxStyle(juce::Slider::NoTextBox, false, 100, 20);
     HIPKnob.setRange(0.0f, 1.0f);
     HIPKnob.setValue(processorRef.params[PluginProcessor::KNOBHIP]->get(), juce::NotificationType::dontSendNotification);

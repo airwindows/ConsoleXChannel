@@ -156,8 +156,8 @@ void AirwindowsMeter::paint(juce::Graphics &g) {
     if (meterZeroL > 192.0f) meterZeroL = 192.0f;
     float meterZeroR = (sqrt(inputZeroR)*6.0f)-6.0f;
     if (meterZeroR > 192.0f) meterZeroR = 192.0f;
-    int lightL = 16-(int)(inputPeakL*16.0f); if (lightL < 0) lightL = 0;
-    int lightR = 16+(int)(inputPeakR*16.0f); if (lightR > 32) lightR = 32;
+    int lightL = 16-(int)(inputPeakL*16.0f); if (lightL < 0) lightL = 0; if (lightL > 32) lightL = 32;
+    int lightR = 16+(int)(inputPeakR*16.0f); if (lightR < 0) lightR = 0; if (lightR > 32) lightR = 32;
     float psDotHypeL = (11.0f * sqrt(inputRMSL * inputRMSR)) / (fabs(((peakL*((hype+6.0f)/7.0f))-slewL) * (7.0f/meterZeroL) )+1.0f);
     float psDotVibeL = sin(pow(fmin(inputPeakL*8.5f,6.18f) / (fabs(((peakL*((hype+4.0f)/5.0f))-slewL) * (7.0f/meterZeroL) )+1.0f),1.618f)*0.13f) * 3.141592f;
     float psDotSizeL = ((psDotVibeL*(1.0f-hype))+(psDotHypeL*hype))*(1.0f+(sin(hype*3.141592f)*0.25f));

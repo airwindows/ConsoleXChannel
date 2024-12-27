@@ -44,6 +44,7 @@ PluginEditor::PluginEditor (PluginProcessor& p)
         FGLKnob.setSliderStyle(juce::Slider::Rotary);
         SGLKnob.setSliderStyle(juce::Slider::Rotary);
         TRFKnob.setSliderStyle(juce::Slider::Rotary);
+        TRGKnob.setSliderStyle(juce::Slider::Rotary);
         TRRKnob.setSliderStyle(juce::Slider::Rotary);
         HMFKnob.setSliderStyle(juce::Slider::Rotary);
         HMGKnob.setSliderStyle(juce::Slider::Rotary);
@@ -79,6 +80,7 @@ PluginEditor::PluginEditor (PluginProcessor& p)
         FGLKnob.setSliderStyle(juce::Slider::RotaryVerticalDrag);
         SGLKnob.setSliderStyle(juce::Slider::RotaryVerticalDrag);
         TRFKnob.setSliderStyle(juce::Slider::RotaryVerticalDrag);
+        TRGKnob.setSliderStyle(juce::Slider::RotaryVerticalDrag);
         TRRKnob.setSliderStyle(juce::Slider::RotaryVerticalDrag);
         HMFKnob.setSliderStyle(juce::Slider::RotaryVerticalDrag);
         HMGKnob.setSliderStyle(juce::Slider::RotaryVerticalDrag);
@@ -114,6 +116,7 @@ PluginEditor::PluginEditor (PluginProcessor& p)
         FGLKnob.setSliderStyle(juce::Slider::RotaryHorizontalDrag);
         SGLKnob.setSliderStyle(juce::Slider::RotaryHorizontalDrag);
         TRFKnob.setSliderStyle(juce::Slider::RotaryHorizontalDrag);
+        TRGKnob.setSliderStyle(juce::Slider::RotaryHorizontalDrag);
         TRRKnob.setSliderStyle(juce::Slider::RotaryHorizontalDrag);
         HMFKnob.setSliderStyle(juce::Slider::RotaryHorizontalDrag);
         HMGKnob.setSliderStyle(juce::Slider::RotaryHorizontalDrag);
@@ -149,6 +152,7 @@ PluginEditor::PluginEditor (PluginProcessor& p)
         FGLKnob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
         SGLKnob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
         TRFKnob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+        TRGKnob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
         TRRKnob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
         HMFKnob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
         HMGKnob.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
@@ -316,7 +320,6 @@ PluginEditor::PluginEditor (PluginProcessor& p)
     addAndMakeVisible(TRFKnob);
     TRFKnob.setColour(juce::Slider::thumbColourId, juce::Colour().fromFloatRGBA(0.698f, 0.152f, 0.164f, 1.0f)); //fixed thumb color red
     
-    TRGKnob.setSliderStyle(juce::Slider::Rotary);
     TRGKnob.setTextBoxStyle(juce::Slider::NoTextBox, false, 100, 20);
     TRGKnob.setRange(0.0f, 1.0f);
     TRGKnob.setValue(processorRef.params[PluginProcessor::KNOBTRG]->get(), juce::NotificationType::dontSendNotification);

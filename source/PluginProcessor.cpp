@@ -192,15 +192,24 @@ void PluginProcessor::getStateInformation (juce::MemoryBlock& destData)
     // You should use this method to store your parameters in the memory block.
     // You could do that either as raw data, or use the XML or ValueTree classes
     // as intermediaries to make it easy to save and load complex data.
-    std::unique_ptr<juce::XmlElement> xml(new juce::XmlElement("consolexchannel"));
+    std::unique_ptr<juce::XmlElement> xml(new juce::XmlElement("consolexchannel")); //note! All ConsoleX plugins
+    //think they're Channel, with regard to XML tags. This is a mistake: they're supposed to have unique element
+    //names, but it's been out in the wild for a year, so they must continue to all seek the same element name.
+    //Turns out the DAW will seek this in the specific instance so you don't have to also have unique XML name
+    //for it to be able to find the one for that specific instance: it'll be looking at the right set of data,
+    //because you can have the same plugin in the same DAW set to different settings.
     xml->setAttribute("streamingVersion", (int)8524);
 
-    for (int i = 0; i < n_params; ++i)
+    for (unsigned long i = 0; i < n_params; ++i)
     {
         juce::String nm = juce::String("awcxc_") + std::to_string(i);
         float val = 0.0f; if (i < n_params) val = *(params[i]);
         xml->setAttribute(nm, val);
     }
+    if (pluginWidth < 8 || pluginWidth > 16386) pluginWidth = 900;
+    xml->setAttribute(juce::String("awcxc_width"), pluginWidth);
+    if (pluginHeight < 8 || pluginHeight > 16386) pluginHeight = 300;
+    xml->setAttribute(juce::String("awcxc_height"), pluginHeight);
     copyXmlToBinary(*xml, destData);
 }
 
@@ -214,12 +223,17 @@ void PluginProcessor::setStateInformation (const void* data, int sizeInBytes)
     {
         if (xmlState->hasTagName("consolexchannel"))
         {
-            for (int i = 0; i < n_params; ++i)
+            for (unsigned long i = 0; i < n_params; ++i)
             {
                 juce::String nm = juce::String("awcxc_") + std::to_string(i);
                 auto f = xmlState->getDoubleAttribute(nm);
-                params[i]->setValueNotifyingHost(f);
+                params[i]->setValueNotifyingHost((float)f);
             }
+            auto w = xmlState->getIntAttribute(juce::String("awcxc_width"));
+            if (w < 8 || w > 16386) w = 900;
+            auto h = xmlState->getIntAttribute(juce::String("awcxc_height"));
+            if (h < 8 || h > 16386) h = 300;
+            updatePluginSize(w, h);
         }
         updateHostDisplay();
     }
@@ -231,9 +245,18 @@ void PluginProcessor::setStateInformation (const void* data, int sizeInBytes)
 void PluginProcessor::updateTrackProperties(const TrackProperties& properties)
 {
     trackProperties = properties;
-    // call the verison in the editor to update there
+    // call the version in the editor to update there
     if (auto* editor = dynamic_cast<PluginEditor*> (getActiveEditor()))
         editor->updateTrackProperties();
+}
+
+void PluginProcessor::updatePluginSize(int w, int h)
+{
+    pluginWidth = w;
+    pluginHeight = h;
+    // call the version in the editor to update there
+    if (auto* editor = dynamic_cast<PluginEditor*> (getActiveEditor()))
+        editor->updatePluginSize();
 }
 
 

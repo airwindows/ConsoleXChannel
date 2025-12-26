@@ -85,7 +85,7 @@ public:
         LEDColour = juce::Colours::findColourForName(newLEDColour, juce::Colours::red);
         applyTilt = fmax(fmin(newTilt.getFloatValue(),1.0f),0.0f) * 0.5f; //value is 0-1 but in use it's 0-0.5
 
-        knobMode = 1; //defaults to rotary because it allows for really fine adjustments
+        knobMode = 1; //I like rotary because it allows for really fine adjustments
         if (newKnobMode.equalsIgnoreCase("rotary")) knobMode = 0;
         if (newKnobMode.equalsIgnoreCase("airwindows")) knobMode = 0;
         if (newKnobMode.equalsIgnoreCase("realistic")) knobMode = 0;
@@ -168,7 +168,7 @@ struct AirwindowsMeter : public juce::Component
     void pushIncrement() {}
     
    void resetArrays(){
-        for (int count = 0; count < dataPoints; ++count) //count through all the points in the array
+        for (unsigned long count = 0; count < dataPoints; ++count) //count through all the points in the array
         {
             dataG[count] = 0.0f;
             dataR[count] = 0.0f;

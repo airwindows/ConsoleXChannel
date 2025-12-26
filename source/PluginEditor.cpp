@@ -14,6 +14,7 @@ PluginEditor::PluginEditor (PluginProcessor& p)
         airwindowsLookAndFeel.setColour(juce::Slider::thumbColourId, airwindowsLookAndFeel.defaultColour);
     }
     updateTrackProperties();
+    updatePluginSize();
 
     idleTimer = std::make_unique<IdleTimer>(this);
     idleTimer->startTimer(1000/30); //space between UI screen updates. Larger is slower updates to screen
@@ -448,7 +449,7 @@ void PluginEditor::paint (juce::Graphics& g)
         airwindowsLookAndFeel.setColour(juce::Slider::thumbColourId, airwindowsLookAndFeel.defaultColour);
     } //find the color of the background tile or image, if there is one. Please use low-contrast stuff, but I'm not your mom :)
     
-    g.setFont(juce::Font(airwindowsLookAndFeel.newFont, g.getCurrentFont().getHeight(), 0));
+    g.setFont(juce::FontOptions(airwindowsLookAndFeel.newFont, g.getCurrentFont().getHeight(), 0));
     auto linewidth = getLocalBounds().getWidth(); if (getLocalBounds().getHeight() > linewidth) linewidth = getLocalBounds().getHeight();  linewidth = (int)cbrt(linewidth/2)/2;
     if ((hostTrackName == juce::String()) || (hostTrackName.length() < 1.0f)) hostTrackName = juce::String("ConsoleX Channel");
     meter.displayTrackName = hostTrackName; //if not track name, then name of plugin. To be displayed on the actual peakmeter
@@ -465,6 +466,8 @@ void PluginEditor::paint (juce::Graphics& g)
 void PluginEditor::resized()
 {
     auto area = getLocalBounds(); // this is a huge huge routine, but not all of it runs at all times!
+    processorRef.pluginWidth = airwindowsLookAndFeel.userWidth = area.getWidth();
+    processorRef.pluginHeight = airwindowsLookAndFeel.userHeight = area.getHeight();
     auto linewidth = area.getWidth();
     float aspectRatio = (float)linewidth / (float)area.getHeight(); //Larger than 1: horisontal. Smaller than 1: vertical
     // 12h-1w = 0.11  (0.26)  6h-2w = 0.41   4h-3w = 1.0    3h-4w = 1.8    2h-6w = 3.85     1h-12w = 15.42
@@ -1567,6 +1570,14 @@ void PluginEditor::sliderDragInternal(juce::Slider *s, bool bv)
 }
 
 void PluginEditor::updateTrackProperties() {hostTrackColour=processorRef.trackProperties.colour; hostTrackName=processorRef.trackProperties.name; repaint();}
+
+void PluginEditor::updatePluginSize() {
+    airwindowsLookAndFeel.userWidth = processorRef.pluginWidth;
+    airwindowsLookAndFeel.userHeight = processorRef.pluginHeight;
+    if (airwindowsLookAndFeel.userWidth < 8 || airwindowsLookAndFeel.userWidth > 16386) airwindowsLookAndFeel.userWidth = 900;
+    if (airwindowsLookAndFeel.userHeight < 8 || airwindowsLookAndFeel.userHeight > 16386) airwindowsLookAndFeel.userHeight = 300;
+    repaint();
+}
 
 void PluginEditor::idle()
 {
